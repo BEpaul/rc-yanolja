@@ -7,4 +7,4 @@ build/
 src/main/java/com/example/demo/config/secret/Secret.java
 
 # application.yml
-src/main/resources/application.yml
+#src/main/resources/application.yml
