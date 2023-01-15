@@ -1,0 +1,10 @@
+.DS_Store
+logs/
+build/
+.gradle/
+
+# Secret.java
+src/main/java/com/example/demo/config/secret/Secret.java
+
+# application.yml
+src/main/resources/application.yml
