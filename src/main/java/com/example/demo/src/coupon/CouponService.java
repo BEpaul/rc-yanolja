@@ -2,6 +2,7 @@ package com.example.demo.src.coupon;
 
 import com.example.demo.config.BaseException;
 import com.example.demo.config.BaseResponseStatus;
+import com.example.demo.src.coupon.model.PatchCouponReq;
 import com.example.demo.src.coupon.model.PostCouponReq;
 import com.example.demo.src.coupon.model.PostCouponRes;
 import org.slf4j.Logger;
@@ -42,6 +43,8 @@ public class CouponService {
 //            throw new BaseException(DATABASE_ERROR);
 //        }
 //    }
+
+    // 쿠폰 생성
     public PostCouponRes createCoupon(PostCouponReq postCouponReq) throws BaseException {
         // 중복 체크
         if (couponProvider.checkCouponName(postCouponReq.getCouponName()) == 1) {
@@ -53,6 +56,19 @@ public class CouponService {
             return new PostCouponRes(couponId);
         } catch (Exception exception) {
             logger.error("App - createCoupon Service Error", exception);
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+
+    // 쿠폰 사용
+    public void modifyCouponStatus(PatchCouponReq patchCouponReq) throws BaseException {
+        try {
+            int result = couponDao.modifyCouponStatus(patchCouponReq);
+            if (result == 0) {
+                throw new BaseException(MODIFY_FAIL_COUPON_STATUS);
+            }
+        } catch (Exception exception) {
+            logger.error("App - modifyCouponStatus service error", exception);
             throw new BaseException(DATABASE_ERROR);
         }
     }

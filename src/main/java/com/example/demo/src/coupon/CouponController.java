@@ -2,9 +2,7 @@ package com.example.demo.src.coupon;
 
 import com.example.demo.config.BaseException;
 import com.example.demo.config.BaseResponse;
-import com.example.demo.src.coupon.model.GetCouponRes;
-import com.example.demo.src.coupon.model.PostCouponReq;
-import com.example.demo.src.coupon.model.PostCouponRes;
+import com.example.demo.src.coupon.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,8 +90,21 @@ public class CouponController {
     }
 
     /**
-     * 쿠폰 삭제 API
+     * 쿠폰 사용 API
      */
+    @ResponseBody
+    @PatchMapping("/{couponId}")
+    public BaseResponse<String> useUpCoupon(@PathVariable("couponId") Long couponId, @RequestBody Coupon coupon) {
+        try {
+            PatchCouponReq patchCouponReq = new PatchCouponReq(couponId, coupon.getStatus());
+            couponService.modifyCouponStatus(patchCouponReq);
+
+            String result = "";
+            return new BaseResponse<>(result);
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
 
 
 
