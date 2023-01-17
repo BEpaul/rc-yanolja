@@ -2,15 +2,16 @@ package com.example.demo.src.coupon.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @AllArgsConstructor
-public class Coupon {
-    private Long couponId;
+public class PostCouponReq {
     private String couponName;
     private Long minPrice;
     private Long discountPrice;
@@ -21,9 +22,6 @@ public class Coupon {
     private String accomType;
     private LocalDateTime startTime;
     private LocalDateTime lostTime;
-    private LocalDateTime createdTime;
-    private LocalDateTime updatedTime;
-    private Long status;
     private Long userId;
     private Long companyId;
 }
