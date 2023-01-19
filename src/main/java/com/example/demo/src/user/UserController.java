@@ -1,5 +1,8 @@
 package com.example.demo.src.user;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.example.demo.config.BaseException;
@@ -27,9 +30,7 @@ public class UserController {
     @Autowired
     private final JwtService jwtService;
 
-
-
-
+    @Autowired
     public UserController(UserProvider userProvider, UserService userService, JwtService jwtService){
         this.userProvider = userProvider;
         this.userService = userService;
@@ -44,6 +45,7 @@ public class UserController {
      * @return BaseResponse<List<GetUserRes>>
      */
     //Query String
+    @Operation(summary = "회원 전체 조회")
     @ResponseBody
     @GetMapping("") // (GET) 127.0.0.1:9000/app/users
     public BaseResponse<List<GetUserRes>> getUsers(@RequestParam(required = false) String Email) {
@@ -66,6 +68,7 @@ public class UserController {
      * @return BaseResponse<GetUserRes>
      */
     // Path-variable
+    @Operation(summary = "특정 회원 조회")
     @ResponseBody
     @GetMapping("/{userIdx}") // (GET) 127.0.0.1:9000/app/users/:userIdx
     public BaseResponse<GetUserRes> getUser(@PathVariable("userIdx") int userIdx) {
@@ -85,6 +88,7 @@ public class UserController {
      * @return BaseResponse<PostUserRes>
      */
     // Body
+    @Operation(summary = "회원가입")
     @ResponseBody
     @PostMapping("")
     public BaseResponse<PostUserRes> createUser(@RequestBody PostUserReq postUserReq) {
@@ -108,6 +112,7 @@ public class UserController {
      * [POST] /users/logIn
      * @return BaseResponse<PostLoginRes>
      */
+    @Operation(summary = "로그인")
     @ResponseBody
     @PostMapping("/logIn")
     public BaseResponse<PostLoginRes> logIn(@RequestBody PostLoginReq postLoginReq){
@@ -126,6 +131,7 @@ public class UserController {
      * [PATCH] /users/:userIdx
      * @return BaseResponse<String>
      */
+    @Operation(summary = "유저 정보 변경")
     @ResponseBody
     @PatchMapping("/{userIdx}")
     public BaseResponse<String> modifyUserName(@PathVariable("userIdx") int userIdx, @RequestBody User user){
@@ -141,7 +147,7 @@ public class UserController {
             userService.modifyUserName(patchUserReq);
 
             String result = "";
-        return new BaseResponse<>(result);
+            return new BaseResponse<>(result);
         } catch (BaseException exception) {
             return new BaseResponse<>((exception.getStatus()));
         }

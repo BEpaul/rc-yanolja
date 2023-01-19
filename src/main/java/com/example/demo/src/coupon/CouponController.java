@@ -3,6 +3,8 @@ package com.example.demo.src.coupon;
 import com.example.demo.config.BaseException;
 import com.example.demo.config.BaseResponse;
 import com.example.demo.src.coupon.model.*;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,7 @@ public class CouponController {
     /**
      * 쿠폰 조회 API (쿠폰 id)
      */
+    @Operation(summary = "특정 쿠폰 조회")
     @ResponseBody
     @GetMapping("/{couponId}")
     public BaseResponse<GetCouponRes> getCouponByCouponId(@PathVariable("couponId") Long couponId) {
@@ -44,8 +47,9 @@ public class CouponController {
     }
 
     /**
-     * 쿠폰 전체 조회 API or 회원 소유 쿠폰 API
+     * 쿠폰 전체 조회 API or 회원 소유 쿠폰 조회 API
      */
+    @Operation(summary = "쿠폰 전체 조회 또는 회원이 소유한 쿠폰 조회")
     @ResponseBody
     @GetMapping("")
     public BaseResponse<List<GetCouponRes>> getCoupons(@RequestParam(required = false) Long userId) {
@@ -66,6 +70,7 @@ public class CouponController {
     /**
      * 쿠폰 생성 API
      */
+    @Operation(summary = "쿠폰 생성")
     @ResponseBody
     @PostMapping("")
     public BaseResponse<PostCouponRes> createCoupon(@RequestBody PostCouponReq postCouponReq) {
@@ -92,6 +97,7 @@ public class CouponController {
     /**
      * 쿠폰 사용 API
      */
+    @Operation(summary = "쿠폰 사용")
     @ResponseBody
     @PatchMapping("/{couponId}")
     public BaseResponse<String> useUpCoupon(@PathVariable("couponId") Long couponId, @RequestBody Coupon coupon) {
@@ -99,7 +105,7 @@ public class CouponController {
             PatchCouponReq patchCouponReq = new PatchCouponReq(couponId, coupon.getStatus());
             couponService.modifyCouponStatus(patchCouponReq);
 
-            String result = "";
+            String result = "쿠폰 사용 완료";
             return new BaseResponse<>(result);
         } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());

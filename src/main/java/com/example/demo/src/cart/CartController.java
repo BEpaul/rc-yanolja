@@ -6,6 +6,8 @@ import com.example.demo.src.cart.model.DeleteCartRes;
 import com.example.demo.src.cart.model.GetCartRes;
 import com.example.demo.src.cart.model.PostCartReq;
 import com.example.demo.src.cart.model.PostCartRes;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,6 +29,7 @@ public class CartController {
     /**
      * 특정 회원 장바구니 조회 API
      */
+    @Operation(summary = "특정 회원 장바구니 조회")
     @ResponseBody
     @GetMapping("/{userId}")
     public BaseResponse<List<GetCartRes>> getCartByUserId(@PathVariable("userId") Long userId) {
@@ -41,6 +44,7 @@ public class CartController {
     /**
      * 장바구니 생성 API
      */
+    @Operation(summary = "장바구니 생성")
     @ResponseBody
     @PostMapping("")
     public BaseResponse<PostCartRes> createCart(@RequestBody PostCartReq postCartReq) {
@@ -55,6 +59,7 @@ public class CartController {
     /**
      * 장바구니 특정 상품 삭제 API
      */
+    @Operation(summary = "장바구니 특정 상품 삭제")
     @ResponseBody
     @DeleteMapping("/{cartId}")
     public BaseResponse<DeleteCartRes> deleteCart(@PathVariable("cartId") Long cartId) {
