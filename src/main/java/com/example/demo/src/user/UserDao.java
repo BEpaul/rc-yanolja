@@ -28,7 +28,7 @@ public class UserDao {
                         rs.getString("ID"),
                         rs.getString("Email"),
                         rs.getString("password"))
-                );
+        );
     }
 
     public List<GetUserRes> getUsersByEmail(String email){
@@ -56,11 +56,11 @@ public class UserDao {
                         rs.getString("password")),
                 getUserParams);
     }
-    
+
 
     public int createUser(PostUserReq postUserReq){
-        String createUserQuery = "insert into UserInfo (userName, ID, password, email) VALUES (?,?,?,?)";
-        Object[] createUserParams = new Object[]{postUserReq.getUserName(), postUserReq.getId(), postUserReq.getPassword(), postUserReq.getEmail()};
+        String createUserQuery = "insert into user (login_id, user_name, email, password, phone_number, nickname) VALUES (?,?,?,?,?,?)";
+        Object[] createUserParams = new Object[]{postUserReq.getLoginId(), postUserReq.getUserName(), postUserReq.getEmail(), postUserReq.getPassword(), postUserReq.getPhoneNumber(),postUserReq.getNickname()};
         this.jdbcTemplate.update(createUserQuery, createUserParams);
 
         String lastInserIdQuery = "select last_insert_id()";
@@ -68,7 +68,7 @@ public class UserDao {
     }
 
     public int checkEmail(String email){
-        String checkEmailQuery = "select exists(select email from UserInfo where email = ?)";
+        String checkEmailQuery = "select exists(select email from user where email = ?)";
         String checkEmailParams = email;
         return this.jdbcTemplate.queryForObject(checkEmailQuery,
                 int.class,
@@ -96,7 +96,7 @@ public class UserDao {
                         rs.getString("email")
                 ),
                 getPwdParams
-                );
+        );
 
     }
 
