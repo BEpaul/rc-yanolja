@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="3ab3e533-f8fc-4e1c-be3c-13138cbfdd8b" name="rc-yanolja" url="http://hyukk.shop">
+        <fileTransfer rootFolder="/var/www/rc-yanolja" accessType="SFTP" host="15.164.254.63" port="22" sshConfigId="ac489b95-ee49-41cd-88a1-944f3155a077" sshConfig="ubuntu@15.164.254.63:22 key" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
