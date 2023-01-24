@@ -11,9 +11,13 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GetUserRes {
-    private int userIdx;
+    private Long userId;
+    private String loginId;
     private String userName;
-    private String ID;
     private String email;
     private String password;
+    private String phoneNumber;
+    private String nickname;
+    private Long point;
+
 }

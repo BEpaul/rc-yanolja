@@ -23,11 +23,8 @@ import static com.example.demo.utils.ValidationRegex.isRegexEmail;
 public class UserController {
     final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @Autowired
     private final UserProvider userProvider;
-    @Autowired
     private final UserService userService;
-    @Autowired
     private final JwtService jwtService;
 
     @Autowired
@@ -70,11 +67,11 @@ public class UserController {
     // Path-variable
     @Operation(summary = "특정 회원 조회")
     @ResponseBody
-    @GetMapping("/{userIdx}") // (GET) 127.0.0.1:9000/app/users/:userIdx
-    public BaseResponse<GetUserRes> getUser(@PathVariable("userIdx") int userIdx) {
+    @GetMapping("/{userId}") // (GET) 127.0.0.1:9000/app/users/:userIdx
+    public BaseResponse<GetUserRes> getUser(@PathVariable("userId") Long userId) {
         // Get Users
         try{
-            GetUserRes getUserRes = userProvider.getUser(userIdx);
+            GetUserRes getUserRes = userProvider.getUser(userId);
             return new BaseResponse<>(getUserRes);
         } catch(BaseException exception){
             return new BaseResponse<>((exception.getStatus()));
@@ -133,25 +130,30 @@ public class UserController {
      */
     @Operation(summary = "유저 정보 변경")
     @ResponseBody
-    @PatchMapping("/{userIdx}")
-    public BaseResponse<String> modifyUserName(@PathVariable("userIdx") int userIdx, @RequestBody User user){
+    @PatchMapping("/{userId}")
+    public BaseResponse<String> modifyUserName(@PathVariable("userId") Long userId, @RequestBody User user){
         try {
-            //jwt에서 idx 추출.
-            int userIdxByJwt = jwtService.getUserIdx();
-            //userIdx와 접근한 유저가 같은지 확인
-            if(userIdx != userIdxByJwt){
+            //jwt에서 id 추출.
+            Long userIdByJwt = jwtService.getUserId();
+            //userId와 접근한 유저가 같은지 확인
+            if(userId != userIdByJwt){
                 return new BaseResponse<>(INVALID_USER_JWT);
             }
             //같다면 유저네임 변경
-            PatchUserReq patchUserReq = new PatchUserReq(userIdx,user.getUserName());
+            PatchUserReq patchUserReq = new PatchUserReq(userId ,user.getUserName());
             userService.modifyUserName(patchUserReq);
 
-            String result = "";
+            String result = "수정 완료";
             return new BaseResponse<>(result);
         } catch (BaseException exception) {
             return new BaseResponse<>((exception.getStatus()));
         }
     }
 
+    @GetMapping("/kakao")
+    public BaseResponse<String> oauthKakao(@RequestParam String code) throws BaseException{
+        String accessToken = userService.getKaKaoAccessToken(code);
 
+        return new BaseResponse<>(accessToken);
+    }
 }

@@ -1,6 +1,7 @@
 package com.example.demo.src.user;
 
 
+import com.example.demo.config.BaseException;
 import com.example.demo.src.user.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -8,6 +9,8 @@ import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.util.List;
+
+import static com.example.demo.config.BaseResponseStatus.PASSWORD_DECRYPTION_ERROR;
 
 @Repository
 public class UserDao {
@@ -20,51 +23,60 @@ public class UserDao {
     }
 
     public List<GetUserRes> getUsers(){
-        String getUsersQuery = "select * from UserInfo";
+        String getUsersQuery = "select * from user";
         return this.jdbcTemplate.query(getUsersQuery,
                 (rs,rowNum) -> new GetUserRes(
-                        rs.getInt("userIdx"),
-                        rs.getString("userName"),
-                        rs.getString("ID"),
+                        rs.getLong("user_id"),
+                        rs.getString("login_id"),
+                        rs.getString("user_name"),
                         rs.getString("Email"),
-                        rs.getString("password"))
+                        rs.getString("password"),
+                        rs.getString("phone_number"),
+                        rs.getString("nickname"),
+                        rs.getLong("point"))
         );
     }
 
     public List<GetUserRes> getUsersByEmail(String email){
-        String getUsersByEmailQuery = "select * from UserInfo where email =?";
+        String getUsersByEmailQuery = "select * from user where email =?";
         String getUsersByEmailParams = email;
         return this.jdbcTemplate.query(getUsersByEmailQuery,
                 (rs, rowNum) -> new GetUserRes(
-                        rs.getInt("userIdx"),
-                        rs.getString("userName"),
-                        rs.getString("ID"),
+                        rs.getLong("user_id"),
+                        rs.getString("login_id"),
+                        rs.getString("user_name"),
                         rs.getString("Email"),
-                        rs.getString("password")),
+                        rs.getString("password"),
+                        rs.getString("phone_number"),
+                        rs.getString("nickname"),
+                        rs.getLong("point")),
                 getUsersByEmailParams);
     }
 
-    public GetUserRes getUser(int userIdx){
-        String getUserQuery = "select * from UserInfo where userIdx = ?";
-        int getUserParams = userIdx;
+    public GetUserRes getUser(Long userId){
+        String getUserQuery = "select * from user where user_id = ?";
+        Long getUserParams = userId;
         return this.jdbcTemplate.queryForObject(getUserQuery,
                 (rs, rowNum) -> new GetUserRes(
-                        rs.getInt("userIdx"),
-                        rs.getString("userName"),
-                        rs.getString("ID"),
+                        rs.getLong("user_id"),
+                        rs.getString("login_id"),
+                        rs.getString("user_name"),
                         rs.getString("Email"),
-                        rs.getString("password")),
+                        rs.getString("password"),
+                        rs.getString("phone_number"),
+                        rs.getString("nickname"),
+                        rs.getLong("point")),
                 getUserParams);
     }
 
 
-    public int createUser(PostUserReq postUserReq){
+    public Long createUser(PostUserReq postUserReq){
         String createUserQuery = "insert into user (login_id, user_name, email, password, phone_number, nickname) VALUES (?,?,?,?,?,?)";
         Object[] createUserParams = new Object[]{postUserReq.getLoginId(), postUserReq.getUserName(), postUserReq.getEmail(), postUserReq.getPassword(), postUserReq.getPhoneNumber(),postUserReq.getNickname()};
         this.jdbcTemplate.update(createUserQuery, createUserParams);
 
         String lastInserIdQuery = "select last_insert_id()";
-        return this.jdbcTemplate.queryForObject(lastInserIdQuery,int.class);
+        return this.jdbcTemplate.queryForObject(lastInserIdQuery,Long.class);
     }
 
     public int checkEmail(String email){
@@ -77,27 +89,31 @@ public class UserDao {
     }
 
     public int modifyUserName(PatchUserReq patchUserReq){
-        String modifyUserNameQuery = "update UserInfo set userName = ? where userIdx = ? ";
-        Object[] modifyUserNameParams = new Object[]{patchUserReq.getUserName(), patchUserReq.getUserIdx()};
+        String modifyUserNameQuery = "update user set user_name = ? where user_id = ? ";
+        Object[] modifyUserNameParams = new Object[]{patchUserReq.getUserName(), patchUserReq.getUserId()};
 
         return this.jdbcTemplate.update(modifyUserNameQuery,modifyUserNameParams);
     }
 
     public User getPwd(PostLoginReq postLoginReq){
-        String getPwdQuery = "select userIdx, password,email,userName,ID from UserInfo where ID = ?";
-        String getPwdParams = postLoginReq.getId();
+        String getPwdQuery = "select user_id, login_id, user_name, email, password, phone_number, nickname, point, created_time, updated_time, status from user where login_id = ?";
+        String getPwdParams = postLoginReq.getLoginId();
 
-        return this.jdbcTemplate.queryForObject(getPwdQuery,
-                (rs,rowNum)-> new User(
-                        rs.getInt("userIdx"),
-                        rs.getString("ID"),
-                        rs.getString("userName"),
-                        rs.getString("password"),
-                        rs.getString("email")
-                ),
-                getPwdParams
+            return this.jdbcTemplate.queryForObject(getPwdQuery,
+                    (rs, rowNum) -> new User(
+                            rs.getLong("user_id"),
+                            rs.getString("login_id"),
+                            rs.getString("user_name"),
+                            rs.getString("email"),
+                            rs.getString("password"),
+                            rs.getString("phone_number"),
+                            rs.getString("nickname"),
+                            rs.getLong("point"),
+                            rs.getTimestamp("created_time").toLocalDateTime(),
+                            rs.getTimestamp("updated_time").toLocalDateTime(),
+                            rs.getLong("status")),
+                    getPwdParams
         );
-
     }
 
 

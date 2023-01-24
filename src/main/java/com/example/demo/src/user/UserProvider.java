@@ -53,9 +53,9 @@ public class UserProvider {
     }
 
 
-    public GetUserRes getUser(int userIdx) throws BaseException {
+    public GetUserRes getUser(Long userId) throws BaseException {
         try {
-            GetUserRes getUserRes = userDao.getUser(userIdx);
+            GetUserRes getUserRes = userDao.getUser(userId);
             return getUserRes;
         } catch (Exception exception) {
             logger.error("App - getUser Provider Error", exception);
@@ -85,9 +85,9 @@ public class UserProvider {
             }
 
             if(user.getPassword().equals(encryptPwd)){
-                int userIdx = user.getUserIdx();
-                String jwt = jwtService.createJwt(userIdx);
-                return new PostLoginRes(userIdx,jwt);
+                Long userId = user.getUserId();
+                String jwt = jwtService.createJwt(userId);
+                return new PostLoginRes(userId,jwt);
             }
             else{
                 throw new BaseException(FAILED_TO_LOGIN);
