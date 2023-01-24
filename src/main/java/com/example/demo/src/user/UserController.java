@@ -150,10 +150,12 @@ public class UserController {
         }
     }
 
+    @Operation(summary = "카카오 OAuth 로그인")
     @GetMapping("/kakao")
-    public BaseResponse<String> oauthKakao(@RequestParam String code) throws BaseException{
+    public void oauthKakao(@RequestParam String code) throws BaseException{
         String accessToken = userService.getKaKaoAccessToken(code);
+        userService.createKakaoUser(accessToken);
 
-        return new BaseResponse<>(accessToken);
+//        return new BaseResponse<>(accessToken);
     }
 }
