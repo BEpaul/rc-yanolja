@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import static com.example.demo.config.BaseResponseStatus.*;
 
@@ -27,6 +28,7 @@ public class ReplyService {
     }
 
     // 답글 작성
+    @Transactional
     public PostReplyRes createReply(PostReplyReq postReplyReq) throws BaseException {
         try {
             Long replyid = replyDao.createReply(postReplyReq);
@@ -39,6 +41,7 @@ public class ReplyService {
     }
 
     // 답글 수정
+    @Transactional
     public void modifyReply(PatchReplyReq patchReplyReq) throws BaseException {
         try {
             Long result = replyDao.modifyReply(patchReplyReq);
@@ -52,6 +55,7 @@ public class ReplyService {
     }
 
     // 답글 삭제
+    @Transactional
     public Long deleteReply(Long replyId) throws BaseException {
         try {
             Long deleteReplyId = replyDao.deleteReply(replyId);

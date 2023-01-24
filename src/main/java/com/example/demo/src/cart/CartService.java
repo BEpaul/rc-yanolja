@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import static com.example.demo.config.BaseResponseStatus.*;
 
@@ -24,6 +25,7 @@ public class CartService {
         this.cartProvider = cartProvider;
     }
 
+    @Transactional
     public PostCartRes createCart(PostCartReq postCartReq) throws BaseException {
         // 중복 체크 - 숙소id와 사용날짜가 같은 경우
         if (cartProvider.checkDuplicateCart(postCartReq.getRoomId(), postCartReq.getUseDay()) == 1) {
@@ -39,6 +41,7 @@ public class CartService {
         }
     }
 
+    @Transactional
     public DeleteCartRes deleteCart(Long cartId) throws BaseException {
         // 예외 처리 - 해당 장바구니가 존재하지 않는 경우
         if (cartProvider.checkCartByCartId(cartId) != 1) {

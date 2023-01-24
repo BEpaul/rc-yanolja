@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -44,7 +45,9 @@ public class CouponService {
 //        }
 //    }
 
+
     // 쿠폰 생성
+    @Transactional
     public PostCouponRes createCoupon(PostCouponReq postCouponReq) throws BaseException {
         // 중복 체크
         if (couponProvider.checkCouponName(postCouponReq.getCouponName()) == 1) {
@@ -61,6 +64,7 @@ public class CouponService {
     }
 
     // 쿠폰 사용
+    @Transactional
     public void modifyCouponStatus(PatchCouponReq patchCouponReq) throws BaseException {
         try {
             int result = couponDao.modifyCouponStatus(patchCouponReq);

@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import static com.example.demo.config.BaseResponseStatus.*;
 
@@ -26,6 +27,7 @@ public class ReviewService {
     }
 
     // 후기 작성
+    @Transactional
     public PostReviewRes createReview(PostReviewReq postReviewReq) throws BaseException {
 
         try {
@@ -38,6 +40,7 @@ public class ReviewService {
     }
 
     // 후기 수정
+    @Transactional
     public void modifyReview(PatchReviewReq patchReviewReq) throws BaseException {
         try {
             int result = reviewDao.modifyReview(patchReviewReq);
@@ -51,6 +54,7 @@ public class ReviewService {
     }
 
     // 후기 삭제
+    @Transactional
     public Long deleteReview(Long reviewId) throws BaseException {
         try {
             Long deleteReviewId = reviewDao.deleteReview(reviewId);
