@@ -79,6 +79,20 @@ public class UserService {
         }
     }
 
+    @Transactional
+    public void modifyUserStatus(DeleteUserReq deleteUserReq) throws BaseException {
+        try {
+            long result = userDao.modifyUserStatus(deleteUserReq);
+            if (result == 0) {
+                throw new BaseException(MODIFY_FAIL_USER_STATUS);
+            }
+
+        } catch (Exception exception) {
+            logger.error("App - deleteUser Service Error", exception);
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+
 
     @Transactional(readOnly = true)
     public String getKaKaoAccessToken(String code){

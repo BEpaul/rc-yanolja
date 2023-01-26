@@ -79,6 +79,15 @@ public class UserDao {
         return this.jdbcTemplate.queryForObject(lastInserIdQuery,Long.class);
     }
 
+    public Long modifyUserStatus(DeleteUserReq deleteUserReq) {
+        String modifyUserStatusQuery = "update user set status = ? where user_id = ?";
+        Object[] modifyUserStatusParams = new Object[]{deleteUserReq.getStatus(), deleteUserReq.getUserId()};
+
+        return Long.valueOf(this.jdbcTemplate.update(modifyUserStatusQuery, modifyUserStatusParams));
+    }
+
+
+
     public int checkEmail(String email){
         String checkEmailQuery = "select exists(select email from user where email = ?)";
         String checkEmailParams = email;
