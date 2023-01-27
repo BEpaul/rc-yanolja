@@ -14,8 +14,9 @@ import java.time.LocalDateTime;
 public class GetCompanyRes {
     private Long companyId;
     private String companyCategory;
-    private String companyName;
-    private String event;
-    private String service;
-    private String policy;
+//    private String companyName;
+//    private String event;
+//    private String service;
+//    private String policy;
+    private String imgUrl;
 }

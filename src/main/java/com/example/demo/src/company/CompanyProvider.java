@@ -25,27 +25,27 @@ public class CompanyProvider {
     }
 
     // 숙소 전체 조회
-    public List<GetCompanyRes> getCompanyAll() throws BaseException {
-        try {
-            List<GetCompanyRes> getCompanyResList = companyDao.getCompanyAll();
-            return getCompanyResList;
-        } catch (Exception exception) {
-            logger.error("App - getCompanyAll provider error", exception);
-            throw new BaseException(DATABASE_ERROR);
-        }
-    }
+//    public List<GetCompanyRes> getCompanyAll() throws BaseException {
+//        try {
+//            List<GetCompanyRes> getCompanyResList = companyDao.getCompanyAll();
+//            return getCompanyResList;
+//        } catch (Exception exception) {
+//            logger.error("App - getCompanyAll provider error", exception);
+//            throw new BaseException(DATABASE_ERROR);
+//        }
+//    }
 
 
     // 숙소 조회 (카테고리 필터링)
-    public List<GetCompanyRes> getCompanyByCategory(String category) throws BaseException {
-        try {
-            List<GetCompanyRes> getCompanyResList = companyDao.getCompanyByCategory(category);
-            return getCompanyResList;
-        } catch (Exception exception) {
-            logger.error("App - getCompanyByCategory provider error", exception);
-            throw new BaseException(DATABASE_ERROR);
-        }
-    }
+//    public List<GetCompanyRes> getCompanyByCategory(String category) throws BaseException {
+//        try {
+//            List<GetCompanyRes> getCompanyResList = companyDao.getCompanyByCategory(category);
+//            return getCompanyResList;
+//        } catch (Exception exception) {
+//            logger.error("App - getCompanyByCategory provider error", exception);
+//            throw new BaseException(DATABASE_ERROR);
+//        }
+//    }
 
     // 특정 숙소 조회
     public GetCompanyRes getCompanyById(Long companyId) throws BaseException {

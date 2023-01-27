@@ -34,18 +34,18 @@ public class CompanyController {
     /**
      * 숙소 전체 조회 API
      */
-    @Operation(summary = "숙소 전체 조회")
-    @ResponseBody
-    @GetMapping("")
-    public BaseResponse<List<GetCompanyRes>> getCompanyAll(@Valid @RequestParam(required = false) String category) {
-        if (category == null) {
-            List<GetCompanyRes> getCompanyResList = companyProvider.getCompanyAll();
-            return new BaseResponse<>(getCompanyResList);
-        }
-
-        List<GetCompanyRes> getCompanyResList = companyProvider.getCompanyByCategory(category);
-        return new BaseResponse<>(getCompanyResList);
-        }
+//    @Operation(summary = "숙소 전체 조회")
+//    @ResponseBody
+//    @GetMapping("")
+//    public BaseResponse<List<GetCompanyRes>> getCompanyAll(@Valid @RequestParam(required = false) String category) {
+//        if (category == null) {
+//            List<GetCompanyRes> getCompanyResList = companyProvider.getCompanyAll();
+//            return new BaseResponse<>(getCompanyResList);
+//        }
+//
+//        List<GetCompanyRes> getCompanyResList = companyProvider.getCompanyByCategory(category);
+//        return new BaseResponse<>(getCompanyResList);
+//        }
 
 
     /**

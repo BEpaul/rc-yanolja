@@ -21,49 +21,51 @@ public class CompanyDao {
     }
 
     // 숙소 전체 조회 jdbc
-    public List<GetCompanyRes> getCompanyAll() {
-        String getCompanyAllQuery = "select * from company";
-        return this.jdbcTemplate.query(getCompanyAllQuery,
-                (rs, rowNum) -> new GetCompanyRes(
-                        rs.getLong("company_id"),
-                        rs.getString("company_category"),
-                        rs.getString("company_name"),
-                        rs.getString("company_event"),
-                        rs.getString("company_service"),
-                        rs.getString("company_policy"))
-        );
-    }
-
-    // 숙소 조회 jdbc (카테고리 필터링)
-    public List<GetCompanyRes> getCompanyByCategory(String category) {
-        String getCompanyByCategoryQuery = "select * from company where category = ?";
-        String getCompanyByCategoryParams = category;
-
-        return this.jdbcTemplate.query(getCompanyByCategoryQuery,
-                (rs, rowNum) -> new GetCompanyRes(
-                        rs.getLong("company_id"),
-                        rs.getString("company_category"),
-                        rs.getString("company_name"),
-                        rs.getString("company_event"),
-                        rs.getString("company_service"),
-                        rs.getString("company_policy")),
-                getCompanyByCategoryParams
-        );
-    }
+//    public List<GetCompanyRes> getCompanyAll() {
+//        String getCompanyAllQuery = "select * from company";
+//        return this.jdbcTemplate.query(getCompanyAllQuery,
+//                (rs, rowNum) -> new GetCompanyRes(
+//                        rs.getLong("company_id"),
+//                        rs.getString("company_category"),
+//                        rs.getString("company_name"),
+//                        rs.getString("company_event"),
+//                        rs.getString("company_service"),
+//                        rs.getString("company_policy"))
+//        );
+//    }
+//
+//    // 숙소 조회 jdbc (카테고리 필터링)
+//    public List<GetCompanyRes> getCompanyByCategory(String category) {
+//        String getCompanyByCategoryQuery = "select * from company where category = ?";
+//        String getCompanyByCategoryParams = category;
+//
+//        return this.jdbcTemplate.query(getCompanyByCategoryQuery,
+//                (rs, rowNum) -> new GetCompanyRes(
+//                        rs.getLong("company_id"),
+//                        rs.getString("company_category"),
+//                        rs.getString("company_name"),
+//                        rs.getString("company_event"),
+//                        rs.getString("company_service"),
+//                        rs.getString("company_policy")),
+//                getCompanyByCategoryParams
+//        );
+//    }
 
     // 특정 숙소 조회 jdbc
     public GetCompanyRes getCompanyById(Long companyId) {
-        String getCompanyByIdQuery = "select * from company where company_id = ?";
+        String getCompanyByIdQuery = "select c.company_id, c.company_category, ci.image_url from company c join company_image ci on c.company_id = ci.company_id where c.company_id = ?";
         Long getCompanyByIdParams = companyId;
 
         return this.jdbcTemplate.queryForObject(getCompanyByIdQuery,
                 (rs, rowNum) -> new GetCompanyRes(
                         rs.getLong("company_id"),
                         rs.getString("company_category"),
-                        rs.getString("company_name"),
-                        rs.getString("company_event"),
-                        rs.getString("company_service"),
-                        rs.getString("company_policy")),
+                        rs.getString("image_url")
+//                        rs.getString("company_name"),
+//                        rs.getString("company_event"),
+//                        rs.getString("company_service"),
+//                        rs.getString("company_policy")
+                ),
                 getCompanyByIdParams);
     }
 
