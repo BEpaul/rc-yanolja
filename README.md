@@ -1,6 +1,6 @@
 # rc-yanolja
 ## Introduction
-![img.png](img.png)
+![image](https://user-images.githubusercontent.com/104749551/218649678-63ef225d-1413-4e0d-9456-23734a803217.png)
 
 숙박 예약 어플리케이션 '야놀자'의 서버를 클론코딩하는 프로젝트입니다.
 ## Used Tech
@@ -16,4 +16,4 @@ https://hyukk.shop/ (현재 배포 중단)
 
 ## ERD
 https://www.erdcloud.com/d/skfWKk3kLLWnuMM6H
-![img_1.png](img_1.png)
+![yanolja2 (1)](https://user-images.githubusercontent.com/104749551/218649732-b051a007-8b09-4e38-be9a-01839ea0d759.png)
